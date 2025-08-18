@@ -8989,12 +8989,10 @@ distill-header .nav a {
 <div class="content">
   <a href="/" class="logo">
     ${logo}
-    Distill
+    Cline
   </a>
   <nav class="nav">
-    <a href="/about/">About</a>
-    <a href="/prize/">Prize</a>
-    <a href="/journal/">Submit</a>
+    <a href="https://github.com/alexcasper/">GitHub</a>
   </nav>
 </div>
 `;
