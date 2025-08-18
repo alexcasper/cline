@@ -16,6 +16,7 @@ import resolve from "rollup-plugin-node-resolve";
 import string from "rollup-plugin-string";
 import commonjs from "rollup-plugin-commonjs";
 import babel from '@rollup/plugin-babel';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // uncomment to show dependencies [1/2]
 // import rollupGrapher from 'rollup-plugin-grapher'
@@ -40,7 +41,8 @@ const componentsConfig = {
     babel({
       "babelHelpers": "bundled",
       "targets": "defaults"
-    })
+    }),
+    visualizer({ filename: 'stats.html' }) 
   ]
 };
 
