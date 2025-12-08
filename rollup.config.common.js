@@ -18,6 +18,7 @@ import commonjs from "rollup-plugin-commonjs";
 import babel from '@rollup/plugin-babel';
 import { visualizer } from 'rollup-plugin-visualizer';
 import copy from 'rollup-plugin-copy';
+import url from '@rollup/plugin-url';
 
 // uncomment to show dependencies [1/2]
 // import rollupGrapher from 'rollup-plugin-grapher'
@@ -31,6 +32,11 @@ const defaultConfig = {
     commonjs(),
     string({
       include: ["**/*.txt", "**/*.svg", "**/*.html", "**/*.css", "**/*.base64"]
+    }),
+    url({
+      include: ["**/*.jpg", "**/*.jpeg", "**/*.png", "**/*.gif"],
+      limit: 0, // Always inline as base64
+      emitFiles: false
     })
   ]
 };

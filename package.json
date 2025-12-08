@@ -26,6 +26,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@rollup/plugin-babel": "^5.0.0",
+    "@rollup/plugin-url": "^8.0.2",
     "bibtex-parse-js": "^0.0.23",
     "chai": "^3.5.0",
     "eslint": "^4.19.1",
@@ -39,12 +40,12 @@
     "rollup": "^2.7.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^0.2.3",
-    "rollup-plugin-visualizer": "^6.0.3",
     "rollup-plugin-gzip": "^1.4.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-string": "^2.0.2",
     "rollup-plugin-uglify": "^1.0.1",
+    "rollup-plugin-visualizer": "^6.0.3",
     "rollup-watch": "^4.3.1",
     "should": "^13.2.3",
     "source-map-support": "^0.5.19"
