@@ -1,11 +1,16 @@
 import logo from '../assets/distill-logo.svg';
+// Note: Place header-bg.jpg in the assets folder - should be the sunset cityscape image
+// The image will be embedded as a data URL or external reference depending on build config
+import headerBg from '../assets/header-bg.jpg';
 
 export const headerTemplate = `
 <style>
 distill-header {
   position: relative;
-  height: 60px;
-  background-color: hsl(200, 60%, 15%);
+  height: 200px;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('${headerBg}');
+  background-size: cover;
+  background-position: center 30%;
   width: 100%;
   box-sizing: border-box;
   z-index: 2;
@@ -14,8 +19,12 @@ distill-header {
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 distill-header .content {
-  height: 70px;
+  height: 100%;
   grid-column: page;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
 }
 distill-header a {
   font-size: 16px;
@@ -36,7 +45,7 @@ distill-header svg {
 }
 @media(min-width: 1080px) {
   distill-header {
-    height: 70px;
+    height: 250px;
   }
   distill-header a {
     height: 70px;
@@ -72,8 +81,7 @@ distill-header .nav a {
   </a>
   <nav class="nav">
     <a href="/about/">About</a>
-    <a href="/prize/">Prize</a>
-    <a href="/journal/">Submit</a>
+    <a href="/work/">Work</a>
   </nav>
 </div>
 `;
