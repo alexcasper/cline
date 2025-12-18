@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cline.pub</title>
+    <title>about - cline.pub</title>
     <style>
         * {
             margin: 0;
@@ -38,8 +38,8 @@
         }
 
         .terminal-content {
-            font-size: 24px;
-            line-height: 1.6;
+            font-size: 14px;
+            line-height: 1.8;
         }
 
         .prompt {
@@ -48,8 +48,8 @@
 
         .cursor {
             display: inline-block;
-            width: 10px;
-            height: 20px;
+            width: 8px;
+            height: 14px;
             background-color: #0f0;
             animation: blink 1s infinite;
             margin-left: 5px;
@@ -71,24 +71,34 @@
 
         .nav {
             margin-top: 20px;
-            font-size: 16px;
+            padding-top: 20px;
+            border-top: 1px solid #0f0;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .command {
+            color: #0f0;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="terminal">
         <div class="terminal-header">
-            <span class="prompt">alex@cline:~$</span>
+            <span class="prompt">user@cline:~$</span> cat about.txt
         </div>
         <div class="terminal-content">
-            <div>
-                <span class="prompt">></span>vibe_ops
-            </div>
+            <div class="command">> about</div>
+
+            <p>Alex is a technology educator and practitioner with interests in distributed, parallel, cloud and edge computing. He holds a BA in Philosophy from the New School, an MA in Digital Material Culture from the University of Sussex, and a PhD in Software Sustainability from Anglia Ruskin.</p>
+
+            <p>Previously, Alex taught apprentices at Ada, the National College for Digital Skills and at Northeastern University. He is now a senior lecturer in DevOps at Queen Mary, University of London, where he is deputy director of the apprenticeship programme and director of employability and graduate outcomes for the school of Physical and Chemical Sciences.</p>
+
             <div class="nav">
-                <span class="prompt">user@cline:~$</span> <a href="about.html">cat about.txt</a>
-            </div>
-            <div style="margin-top: 10px;">
-                <span class="cursor"></span>
+                <span class="prompt">user@cline:~$</span> <a href="index.html">cd ~</a>
             </div>
         </div>
     </div>
