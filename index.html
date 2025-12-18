@@ -1,115 +1,88 @@
-<!--
-  Copyright 2018 The Distill Template Authors
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
-<!doctype html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <script src="template.v2.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cline.pub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .terminal {
+            max-width: 800px;
+            width: 100%;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .terminal-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0f0;
+        }
+
+        .terminal-content {
+            font-size: 24px;
+            line-height: 1.6;
+        }
+
+        .prompt {
+            color: #0f0;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #0f0;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        a {
+            color: #0f0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-
 <body>
-  <distill-header></distill-header>
-  <d-front-matter>
-    <script id='distill-front-matter' type="text/json">{
-    "title": "Alex Cline, PhD MBCS",
-    "description": "Technical instructor and program leader passionate about teaching the latest technologies. Cloud computing specialist exploring inference and scaling for AI projects.",
-    "published": "Jan 1, 2025",
-    "authors": [
-      {
-        "author":"Alex Cline, PhD MBCS",
-        "authorURL":"https://cline.pub/",
-        "affiliations": [{"name": "Queen Mary, University of London"}]
-      },
-    ],
-    "katex": {
-      "delimiters": [
-        {"left": "$$", "right": "$$", "display": false}
-      ]
-    }
-  }</script>
-  </d-front-matter>
-  <d-title>
-    <figure style="grid-column: page; margin: 1rem 0;"><img src="momentum.png"
-        style="width:100%; border: 1px solid rgba(0, 0, 0, 0.2);" /></figure>
-    <p>Technical instructor and cloud computing specialist</p>
-  </d-title>
-  <d-byline></d-byline>
-  <d-article>
-    <h2>About</h2>
-    <p>
-      A technical instructor and program leader passionate about teaching the latest technologies.
-      A cloud computing specialist exploring inference and scaling for AI projects. Also, a research
-      software engineer focused on digital humanities projects, working with museums, libraries, and
-      the heritage sector.
-    </p>
-
-    <h2>Current Position</h2>
-    <p>
-      <strong>Senior Lecturer, Information Systems (DevOps)</strong><br>
-      Queen Mary, University of London<br>
-      School of Physical and Chemical Sciences<br>
-      August 2024 - Present
-    </p>
-    <p>
-      Teaching Fundamentals of Programming, Software Engineering Tools, Techniques and Practices,
-      and Software Quality Assurance on a Digital Technology Solutions programme. Acting as Deputy
-      Programme Lead for digital apprenticeships in Science & Engineering and overseeing final project
-      supervision. Promoting high-performance and cloud computing on campus through workshops, tutorials,
-      and training.
-    </p>
-
-    <h2>Previous Experience</h2>
-    <h3>Northeastern University</h3>
-    <p>
-      <strong>Assistant Professor, Cloud Engineering</strong> (April 2021 - August 2024)<br>
-      Led a government-funded bootcamp on cloud technology with ServiceNow, the Refugee Council and
-      the Department for Education, reaching hundreds of students around England. Developed degree
-      apprenticeship courses including Distributed Systems, Cloud Computing, Organisational Behaviour,
-      and IT Service Management.
-    </p>
-
-    <h3>Ada National College for Digital Skills</h3>
-    <p>
-      <strong>Lecturer, Systems and Automation</strong> (May 2018 - August 2021)<br>
-      Taught modules on Data, Software and Consulting pathways. Developed curricula in Programming
-      and Relational Databases, Distributed Systems and Cloud Computing, and Data Engineering.
-    </p>
-
-    <h2>Education</h2>
-    <ul>
-      <li><strong>PhD, Digital Platforms</strong> - Anglia Ruskin University, Storylab</li>
-      <li><strong>MA, Digital Media</strong> - University of Sussex</li>
-      <li><strong>BA, Philosophy, Culture and Media</strong> - The New School, Eugene Lang College</li>
-    </ul>
-
-    <h2>Certifications & Memberships</h2>
-    <p>
-      <br>AWS Certified (SysOps Admin, Developer, Solutions Architect) • Azure AI Fundamentals & Associate •
-      <br>ITILv4 Certified • Nvidia Generative AI LLM Associate • Prince 2 Fundamentals & Practitioner •
-      <br>ServiceNow Certified System Administrator & Implementation Specialist • Member, British Computer Society •
-      <br>AWS Educate Faculty Ambassador • GCP Faculty Expert • Library and Data Carpentries Instructor
-    </p>
-  </d-article>
-
-  <d-appendix>
-
-    <d-bibliography src="bibliography.bib"></d-bibliography>
-  </d-appendix>
-
-  <distill-footer></distill-footer>
-
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="prompt">user@cline:~$</span>
+        </div>
+        <div class="terminal-content">
+            <div>
+                <span class="prompt">></span> cline.pub
+            </div>
+            <div style="margin-top: 10px;">
+                <span class="cursor"></span>
+            </div>
+        </div>
+    </div>
 </body>
+</html>
