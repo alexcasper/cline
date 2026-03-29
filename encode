@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>encode — cline.pub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .terminal {
+            max-width: 800px;
+            width: 100%;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .terminal-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-header .title {
+            font-size: 16px;
+            color: #0f0;
+        }
+
+        .terminal-header .back-link {
+            font-size: 13px;
+            color: #0a0;
+        }
+
+        .terminal-header .back-link a {
+            color: #0a0;
+            text-decoration: none;
+        }
+
+        .terminal-header .back-link a:hover {
+            color: #0f0;
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            color: #0a0;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .prompt-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .prompt-char {
+            color: #0f0;
+            user-select: none;
+        }
+
+        /* ── Input / Textarea ────────────────────────────── */
+        textarea, input[type="text"] {
+            width: 100%;
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0a0;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            padding: 10px 12px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            caret-color: #0f0;
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            border-color: #0f0;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+        }
+
+        textarea::placeholder, input[type="text"]::placeholder {
+            color: #040;
+        }
+
+        textarea {
+            min-height: 110px;
+            line-height: 1.55;
+        }
+
+        /* ── Mode selector ───────────────────────────────── */
+        .mode-selector {
+            display: flex;
+            gap: 0;
+            border: 1px solid #0a0;
+            border-radius: 3px;
+            overflow: hidden;
+            width: fit-content;
+            margin-bottom: 14px;
+        }
+
+        .mode-btn {
+            background: #000;
+            color: #0a0;
+            border: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            padding: 6px 16px;
+            cursor: pointer;
+            transition: background 0.12s, color 0.12s;
+            border-right: 1px solid #0a0;
+        }
+
+        .mode-btn:last-child {
+            border-right: none;
+        }
+
+        .mode-btn.active {
+            background: #0f0;
+            color: #000;
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: #002200;
+            color: #0f0;
+        }
+
+        /* ── Action buttons ──────────────────────────────── */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        button.action-btn {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            padding: 7px 18px;
+            cursor: pointer;
+            transition: background 0.12s, color 0.12s, box-shadow 0.12s;
+        }
+
+        button.action-btn:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.35);
+        }
+
+        button.action-btn:active {
+            background: #0d0;
+            color: #000;
+        }
+
+        button.action-btn.secondary {
+            border-color: #0a0;
+            color: #0a0;
+        }
+
+        button.action-btn.secondary:hover {
+            background: #0a0;
+            color: #000;
+        }
+
+        /* ── Output area ─────────────────────────────────── */
+        .output-box {
+            background: #001100;
+            border: 1px solid #0a0;
+            border-radius: 3px;
+            padding: 10px 12px;
+            font-size: 14px;
+            line-height: 1.55;
+            min-height: 80px;
+            word-break: break-all;
+            white-space: pre-wrap;
+            color: #0f0;
+            position: relative;
+        }
+
+        .output-box.empty {
+            color: #040;
+            font-style: italic;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #000;
+            color: #0a0;
+            border: 1px solid #0a0;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            padding: 3px 9px;
+            cursor: pointer;
+            transition: background 0.12s, color 0.12s;
+        }
+
+        .copy-btn:hover {
+            background: #0a0;
+            color: #000;
+        }
+
+        /* ── Stats / meta row ────────────────────────────── */
+        .meta-row {
+            display: flex;
+            gap: 24px;
+            font-size: 12px;
+            color: #0a0;
+            margin-top: 8px;
+        }
+
+        .meta-row span strong {
+            color: #0f0;
+        }
+
+        /* ── Divider ─────────────────────────────────────── */
+        .divider {
+            border: none;
+            border-top: 1px solid #020;
+            margin: 24px 0;
+        }
+
+        /* ── Encoding options ────────────────────────────── */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        label.option-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #0a0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        label.option-label:hover {
+            color: #0f0;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #0a0;
+            border-radius: 2px;
+            background: #000;
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            transition: border-color 0.12s, background 0.12s;
+        }
+
+        input[type="checkbox"]:checked {
+            background: #0f0;
+            border-color: #0f0;
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 1px;
+            font-size: 12px;
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* ── Status line ─────────────────────────────────── */
+        .status-line {
+            margin-top: 16px;
+            font-size: 12px;
+            color: #040;
+            min-height: 16px;
+        }
+
+        .status-line.ok  { color: #0f0; }
+        .status-line.err { color: #f00; }
+
+        /* ── Cursor blink ────────────────────────────────── */
+        .cursor {
+            display: inline-block;
+            width: 9px;
+            height: 15px;
+            background-color: #0f0;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%,  50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        a {
+            color: #0f0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Scrollbar ───────────────────────────────────── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #0a0; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0f0; }
+
+        @media (max-width: 480px) {
+            .terminal { padding: 14px; }
+            .btn-row { gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" role="main">
+
+        <!-- Header -->
+        <div class="terminal-header">
+            <span class="title">cat encode.txt</span>
+            <span class="back-link"><a href="https://cline.pub">← cline/</a></span>
+        </div>
+
+        <!-- Mode select -->
+        <div class="section">
+            <div class="section-label">// encoding mode</div>
+            <div class="mode-selector" role="group" aria-label="Encoding mode">
+                <button class="mode-btn active" data-mode="base64"    onclick="setMode('base64')">base64</button>
+                <button class="mode-btn"         data-mode="url"       onclick="setMode('url')">url</button>
+                <button class="mode-btn"         data-mode="html"      onclick="setMode('html')">html</button>
+                <button class="mode-btn"         data-mode="hex"       onclick="setMode('hex')">hex</button>
+                <button class="mode-btn"         data-mode="binary"    onclick="setMode('binary')">binary</button>
+                <button class="mode-btn"         data-mode="rot13"     onclick="setMode('rot13')">rot13</button>
+            </div>
+
+            <!-- Per-mode options -->
+            <div id="opts-base64" class="options-grid">
+                <label class="option-label">
+                    <input type="checkbox" id="opt-urlsafe"> url-safe chars
+                </label>
+                <label class="option-label">
+                    <input type="checkbox" id="opt-nopad"> no padding
+                </label>
+            </div>
+            <div id="opts-url" class="options-grid" style="display:none">
+                <label class="option-label">
+                    <input type="checkbox" id="opt-full-url"> encode full URI
+                </label>
+            </div>
+            <div id="opts-html" class="options-grid" style="display:none">
+                <label class="option-label">
+                    <input type="checkbox" id="opt-html-named" checked> named entities
+                </label>
+                <label class="option-label">
+                    <input type="checkbox" id="opt-html-all"> encode all chars
+                </label>
+            </div>
+            <div id="opts-hex"    style="display:none"></div>
+            <div id="opts-binary" style="display:none"></div>
+            <div id="opts-rot13"  style="display:none"></div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Input -->
+        <div class="section">
+            <div class="section-label">// input</div>
+            <div class="prompt-line">
+                <span class="prompt-char">$</span>
+                <span style="font-size:13px;color:#0a0">echo $INPUT | encode --mode=<span id="mode-label">base64</span></span>
+            </div>
+            <textarea
+                id="input-text"
+                placeholder="paste or type text here..."
+                spellcheck="false"
+                autocomplete="off"
+                oninput="onInputChange()"
+            ></textarea>
+            <div class="meta-row" id="input-meta">
+                <span><strong id="in-bytes">0</strong> bytes</span>
+                <span><strong id="in-chars">0</strong> chars</span>
+                <span><strong id="in-lines">0</strong> lines</span>
+            </div>
+        </div>
+
+        <!-- Action row -->
+        <div class="btn-row">
+            <button class="action-btn" onclick="runEncode()">encode →</button>
+            <button class="action-btn" onclick="runDecode()">← decode</button>
+            <button class="action-btn secondary" onclick="swapBuffers()">swap</button>
+            <button class="action-btn secondary" onclick="clearAll()">clear</button>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Output -->
+        <div class="section">
+            <div class="section-label">// output</div>
+            <div class="output-box empty" id="output-box">
+                <button class="copy-btn" onclick="copyOutput()" title="Copy to clipboard">copy</button>
+                <span id="output-text">awaiting input...</span>
+            </div>
+            <div class="meta-row" id="output-meta">
+                <span><strong id="out-bytes">—</strong> bytes</span>
+                <span><strong id="out-chars">—</strong> chars</span>
+                <span id="ratio-cell"><strong id="ratio">—</strong> ratio</span>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="status-line" id="status-line">
+            <span class="cursor"></span>
+        </div>
+
+    </div><!-- /.terminal -->
+
+    <script>
+    'use strict';
+
+    /* ── State ──────────────────────────────────────── */
+    let currentMode = 'base64';
+
+    /* ── Mode switch ────────────────────────────────── */
+    function setMode(m) {
+        currentMode = m;
+        document.querySelectorAll('.mode-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.mode === m);
+        });
+        ['base64','url','html','hex','binary','rot13'].forEach(k => {
+            document.getElementById('opts-' + k).style.display = k === m ? '' : 'none';
+        });
+        document.getElementById('mode-label').textContent = m;
+        setStatus('');
+    }
+
+    /* ── Input tracking ─────────────────────────────── */
+    function onInputChange() {
+        const v = document.getElementById('input-text').value;
+        const enc = new TextEncoder();
+        const bytes = enc.encode(v).length;
+        document.getElementById('in-bytes').textContent = bytes;
+        document.getElementById('in-chars').textContent = v.length;
+        document.getElementById('in-lines').textContent = v === '' ? 0 : v.split('\n').length;
+        setStatus('');
+    }
+
+    /* ── Encode/Decode ──────────────────────────────── */
+    function runEncode() {
+        const input = document.getElementById('input-text').value;
+        if (!input.trim()) { setStatus('nothing to encode', 'err'); return; }
+        try {
+            const result = encode(input, currentMode);
+            showOutput(result);
+            setStatus('encoded ✓', 'ok');
+        } catch(e) {
+            setStatus('error: ' + e.message, 'err');
+        }
+    }
+
+    function runDecode() {
+        const input = document.getElementById('input-text').value;
+        if (!input.trim()) { setStatus('nothing to decode', 'err'); return; }
+        try {
+            const result = decode(input, currentMode);
+            showOutput(result);
+            setStatus('decoded ✓', 'ok');
+        } catch(e) {
+            setStatus('error: ' + e.message, 'err');
+        }
+    }
+
+    function encode(text, mode) {
+        switch(mode) {
+            case 'base64': {
+                let b = btoa(unescape(encodeURIComponent(text)));
+                const urlSafe = document.getElementById('opt-urlsafe').checked;
+                const noPad   = document.getElementById('opt-nopad').checked;
+                if (urlSafe) b = b.replace(/\+/g,'-').replace(/\//g,'_');
+                if (noPad)   b = b.replace(/=+$/,'');
+                return b;
+            }
+            case 'url': {
+                const full = document.getElementById('opt-full-url').checked;
+                return full ? encodeURI(text) : encodeURIComponent(text);
+            }
+            case 'html': {
+                const named = document.getElementById('opt-html-named').checked;
+                const all   = document.getElementById('opt-html-all').checked;
+                return htmlEncode(text, named, all);
+            }
+            case 'hex': {
+                return Array.from(new TextEncoder().encode(text))
+                    .map(b => b.toString(16).padStart(2,'0'))
+                    .join(' ');
+            }
+            case 'binary': {
+                return Array.from(new TextEncoder().encode(text))
+                    .map(b => b.toString(2).padStart(8,'0'))
+                    .join(' ');
+            }
+            case 'rot13': {
+                return rot13(text);
+            }
+        }
+    }
+
+    function decode(text, mode) {
+        switch(mode) {
+            case 'base64': {
+                let b = text.trim().replace(/-/g,'+').replace(/_/g,'/');
+                while (b.length % 4) b += '=';
+                return decodeURIComponent(escape(atob(b)));
+            }
+            case 'url': {
+                const full = document.getElementById('opt-full-url').checked;
+                return full ? decodeURI(text) : decodeURIComponent(text);
+            }
+            case 'html': {
+                const d = document.createElement('div');
+                d.innerHTML = text;
+                return d.textContent;
+            }
+            case 'hex': {
+                const bytes = text.trim().split(/\s+/).map(h => parseInt(h, 16));
+                return new TextDecoder().decode(new Uint8Array(bytes));
+            }
+            case 'binary': {
+                const bytes = text.trim().split(/\s+/).map(b => parseInt(b, 2));
+                return new TextDecoder().decode(new Uint8Array(bytes));
+            }
+            case 'rot13': {
+                return rot13(text);
+            }
+        }
+    }
+
+    /* ── HTML encoding helpers ──────────────────────── */
+    const HTML_NAMED = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+
+    function htmlEncode(text, named, all) {
+        return Array.from(text).map(ch => {
+            if (named && HTML_NAMED[ch]) return HTML_NAMED[ch];
+            const code = ch.codePointAt(0);
+            if (all && code > 127) return '&#x' + code.toString(16).toUpperCase() + ';';
+            if (!named && (ch === '&' || ch === '<' || ch === '>' || ch === '"' || ch === "'"))
+                return '&#x' + code.toString(16).toUpperCase() + ';';
+            return ch;
+        }).join('');
+    }
+
+    /* ── ROT13 ──────────────────────────────────────── */
+    function rot13(str) {
+        return str.replace(/[a-zA-Z]/g, c => {
+            const base = c <= 'Z' ? 65 : 97;
+            return String.fromCharCode(((c.charCodeAt(0) - base + 13) % 26) + base);
+        });
+    }
+
+    /* ── Output display ─────────────────────────────── */
+    function showOutput(text) {
+        const box = document.getElementById('output-box');
+        const span = document.getElementById('output-text');
+        box.classList.remove('empty');
+        span.textContent = text;
+
+        const enc = new TextEncoder();
+        const bytes = enc.encode(text).length;
+        document.getElementById('out-bytes').textContent = bytes;
+        document.getElementById('out-chars').textContent = text.length;
+
+        const inLen = enc.encode(document.getElementById('input-text').value).length;
+        if (inLen > 0) {
+            document.getElementById('ratio').textContent =
+                (bytes / inLen).toFixed(2) + 'x';
+        }
+    }
+
+    /* ── Utilities ──────────────────────────────────── */
+    function swapBuffers() {
+        const outText = document.getElementById('output-text').textContent;
+        const outBox  = document.getElementById('output-box');
+        if (outBox.classList.contains('empty')) { setStatus('nothing in output to swap', 'err'); return; }
+        document.getElementById('input-text').value = outText;
+        onInputChange();
+        outBox.classList.add('empty');
+        document.getElementById('output-text').textContent = 'awaiting input...';
+        document.getElementById('out-bytes').textContent = '—';
+        document.getElementById('out-chars').textContent = '—';
+        document.getElementById('ratio').textContent = '—';
+        setStatus('buffers swapped', 'ok');
+    }
+
+    function clearAll() {
+        document.getElementById('input-text').value = '';
+        document.getElementById('output-text').textContent = 'awaiting input...';
+        document.getElementById('output-box').classList.add('empty');
+        document.getElementById('out-bytes').textContent = '—';
+        document.getElementById('out-chars').textContent = '—';
+        document.getElementById('ratio').textContent = '—';
+        onInputChange();
+        setStatus('cleared', 'ok');
+    }
+
+    function copyOutput() {
+        const outBox = document.getElementById('output-box');
+        if (outBox.classList.contains('empty')) { setStatus('nothing to copy', 'err'); return; }
+        const text = document.getElementById('output-text').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            setStatus('copied to clipboard ✓', 'ok');
+        }).catch(() => {
+            setStatus('clipboard unavailable', 'err');
+        });
+    }
+
+    function setStatus(msg, type) {
+        const el = document.getElementById('status-line');
+        el.className = 'status-line' + (type ? ' ' + type : '');
+        el.innerHTML = msg
+            ? '<span class="prompt-char">$</span> ' + msg
+            : '<span class="cursor"></span>';
+    }
+    </script>
+</body>
+</html>
