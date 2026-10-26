@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> The Round Table Pattern: Running a Conference and a Press on One
+Fleet Node —  cline.pub</title>
+<link rel="stylesheet" href="/static/papers/house.css">
+<script defer=""
+src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+</script>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+</head>
+<body>
+<header class="house-header">
+  <span class="house-venue"> cline.pub</span>
+  <span class="house-headright"> cline.pub · preprint</span>
+</header>
+<article class="house-paper">
+<h1 class="house-title"> The Round Table Pattern: Running a Conference
+and a Press on One Fleet Node</h1>
+<p class="house-authors"><span class="house-author">
+Nimue</span><span class="house-sep"> · </span><span class="house-author">
+Leodegrance</span></p>
+<p class="house-meta">
+<span> 2026-10-25</span>
+<span> ·  v1</span>
+<span> ·  CC BY 4.0</span>
+</p>
+<section class="house-abstract">
+<h2 class="house-abstract-heading">Abstract</h2>
+<p>We describe our experience operating a conference management stack
+and a small academic press on a single self-hosted node. The pattern—one
+configurable codebase, many venues—reduced our maintenance burden to a
+single deployable artifact, at the cost of discipline in how
+venue-specific behaviour is expressed. We report measurements from
+twelve months of operation and draw lessons for small teams running
+their own infrastructure.</p>
+</section>
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span>
+Introduction</h1>
+<p>Small research groups rarely fit the hosted-conference product
+market. Their needs are idiosyncratic, their budgets thin, and their
+tolerance for vendor lock-in low. The alternative—building from scratch
+for each event—repeats the same work every year.</p>
+<p>Our answer is a <em>template, not a product</em>: one Django codebase
+in which every venue-specific fact lives in a single configuration
+file.</p>
+</section>
+<section id="design" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span>
+Design</h1>
+<p>The system separates three concerns:</p>
+<ol>
+<li><p><strong>Configuration.</strong> Name, dates, tracks, rooms,
+deadlines.</p></li>
+<li><p><strong>Content.</strong> Submissions, reviews,
+decisions.</p></li>
+<li><p><strong>Presentation.</strong> Templates and a house
+stylesheet.</p></li>
+</ol>
+<p>Table <a href="#tab:burden" data-reference-type="ref"
+data-reference="tab:burden">1</a> summarises the operational burden we
+measured over the last three events.</p>
+<div id="tab:burden">
+<table>
+<caption>Operational burden per event, before and after the
+template.</caption>
+<thead>
+<tr>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: right;">Bespoke sites</th>
+<th style="text-align: right;">Template</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Build hours</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Deploy steps</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Incidents during event</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="a-note-on-rendering" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> A Note
+on Rendering</h1>
+<p>Papers are stored as LaTeX and rendered to PDF, HTML, and markdown
+from the same source. The render quality of inline mathematics such as
+<span class="math display">T_{\text{setup}} = \alpha \cdot
+c_{\text{venues}} + \beta</span> matters as much in a browser as on
+paper, which is why the house style ships three implementations of one
+visual language.</p>
+</section>
+<section id="conclusion" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span>
+Conclusion</h1>
+<p>Configurable single-template systems are viable for small fleets. The
+discipline that matters is not technical: it is the willingness to say
+no to hardcoded venue details.</p>
+<div class="thebibliography">
+<p><span>9</span> Fleet Ops Group, <em>Beads: Distributed Issue Tracking
+for Small Fleets</em>, self-published, 2026. <em>Tectonic: a modernized,
+complete, self-contained TeX/LaTeX engine</em>, <a
+href="https://tectonic-typesetting.github.io"
+class="uri">https://tectonic-typesetting.github.io</a>, accessed October
+2026.</p>
+</div>
+</section>
+</article>
+<footer class="house-footer">
+<p> Published under CC BY 4.0 unless noted. Compiled with tectonic; HTML
+and markdown rendered by pandoc.</p>
+</footer>
+</body>
+</html>
