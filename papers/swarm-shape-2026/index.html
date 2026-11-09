@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SwarmShape: Influence Structure in LLM Agent Swarms of Size 2–30 Replicates Across Serving Stacks; Conduct Rates Do Not — cline.pub</title>
+<meta name="description" content="When an LLM agent swarm misbehaves, blame usually lands on a bad actor. We ask a different question: how much of a swarm&#x27;s behaviour is a property of its *shape* …">
+<link rel="stylesheet" href="/static/papers/house.css">
+<link rel="stylesheet" href="/static/papers/export.css">
+</head>
+<body>
+<header class="x-top">
+  <a class="x-wordmark" href="/">cline.pub</a>
+  <nav class="x-nav">
+    <a href="/">Papers</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>
+
+<main class="x-main">
+
+<article class="x-landing">
+  <h1>SwarmShape: Influence Structure in LLM Agent Swarms of Size 2–30 Replicates Across Serving Stacks; Conduct Rates Do Not</h1>
+  <p class="x-paper-meta">
+    When an LLM agent swarm misbehaves, blame usually lands on a bad actor. We ask
+     — Nov 2026
+    · CC BY 4.0
+  </p>
+  
+  <section class="x-abstract">
+    <h2>Abstract</h2>
+    <p>When an LLM agent swarm misbehaves, blame usually lands on a bad actor. We ask
+a different question: how much of a swarm&#x27;s behaviour is a property of its
+*shape* — who can talk to whom — rather than of any individual agent? We adapt
+an LLM market harness (agora) so that seller swarms of size 2–30 communicate
+over 57 distinct undirected communication graphs (exhaustively enumerated up to
+size 8, family-sampled above), give every agent the same unenforced promise —
+never charge buyers more than unit cost plus a markup — and detect promise-
+breaking from committed prices, never from transcripts. We run the full
+114-game grid twice, on two independent serving stacks (llama.cpp with a 4-bit
+quant on dusk; vLLM on full-precision weights on Modal), plus 4-seed and
+10-seed campaigns. One result reproduces across stacks. Who-follows-whom is
+concentrated in every game (101/101 dusk games exceed the uniform baseline),
+but most of that concentration is predicted by the graph&#x27;s visibility
+structure alone: a neighbor-uniform null explains the bulk of it (median
+observed/null ratio 1.12 dusk, 1.07 Modal), leaving a modest behavioral
+excess — agents follow some neighbours more than visibility predicts — in
+73%/66% of games, stable across stacks. Conduct rates do not reproduce: the
+clean-swarm promise-breaking rate is 2.5% of agent-rounds on dusk and 0.1% on
+Modal; the instructed rogue&#x27;s own rate is within 2× across hosts (0.064 vs
+0.039–0.051), so the popular &quot;rogue lift&quot; ratio is ill-defined; and dusk&#x27;s
+action-level collapse at n $\geq$ 28 vanishes on Modal. The oversight lesson:
+structural influence metrics travel across serving stacks; conduct baselines
+must be established per stack, because an LLM swarm&#x27;s apparent lawlessness can
+be an artifact of how the model is served.</p>
+  </section>
+  
+
+  <h2>Versions</h2>
+  
+  <section class="x-version">
+    <h3>v1</h3>
+    
+    <p class="x-formats">
+      <a href="/papers/swarm-shape-2026/v1.html">HTML</a>
+      <a href="/papers/swarm-shape-2026/v1.pdf">PDF</a>
+      <a href="/papers/swarm-shape-2026/v1.md">Markdown</a>
+      <a href="/papers/swarm-shape-2026/v1.zip">LaTeX source</a>
+      <a href="/papers/swarm-shape-2026/cite.bib">BibTeX</a>
+    </p>
+    
+  </section>
+  
+</article>
+
+</main>
+
+<footer class="x-footer">
+  <p>Published under CC BY 4.0 unless noted. Compiled with tectonic; HTML and markdown rendered by pandoc.</p>
+</footer>
+</body>
+</html>
