@@ -109,6 +109,29 @@ html { background: #0f172a; }
 .x-creds { columns: 2; column-gap: 2rem; }
 @media (max-width: 40rem) { .x-creds { columns: 1; } }
 
+/* musings */
+.x-musings { margin-top: 1.5rem; }
+.x-musing { padding: 1.2rem 0; border-top: 1px solid #e2e8f0; }
+.x-musing-title { font-family: Georgia, serif; font-size: 1.25rem; margin: 0 0 0.15rem; }
+.x-musing-title a { color: var(--x-ink); text-decoration-color: color-mix(in srgb, var(--x-accent) 40%, transparent); }
+.x-musing-title a:hover { color: var(--x-accent); }
+.x-musing-meta { font-size: 0.8rem; color: var(--x-muted); font-family: var(--x-mono); margin: 0 0 0.4rem; }
+.x-musing-excerpt { font-size: 0.95em; color: #475569; margin: 0; }
+.x-backlink { color: var(--x-accent); text-decoration: none; font-family: var(--x-mono); }
+.x-backlink:hover { text-decoration: underline; }
+.x-musing-page h1 { font-family: Georgia, serif; margin-bottom: 0.2rem; }
+.x-prose { margin-top: 1.4rem; }
+.x-prose h2 { font-family: Georgia, serif; margin-top: 1.6rem; }
+.x-prose h3 { font-family: Georgia, serif; margin-top: 1.2rem; }
+.x-prose p { line-height: 1.7; margin: 0 0 1rem; color: #334155; }
+.x-prose ul, .x-prose ol { line-height: 1.7; color: #334155; margin: 0 0 1rem; padding-left: 1.4rem; }
+.x-prose a { color: var(--x-accent); }
+.x-prose code { font-family: var(--x-mono); font-size: 0.88em; background: #eef2ff; border-radius: 3px; padding: 0.1em 0.35em; }
+.x-prose pre { background: #0f172a; color: #e2e8f0; border-radius: 6px; padding: 0.9rem 1.1rem; overflow-x: auto; font-size: 0.85em; line-height: 1.5; }
+.x-prose pre code { background: none; padding: 0; color: inherit; }
+.x-prose blockquote { border-left: 3px solid var(--x-accent); margin: 0 0 1rem; padding: 0.2rem 0 0.2rem 1rem; color: #475569; }
+.x-prose img { max-width: 100%; }
+
 /* paper landing */
 .x-landing .x-abstract {
   background: #eef2ff;
